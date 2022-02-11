@@ -15,6 +15,7 @@ using namespace ::apache::thrift::transport;
 int main(int argc, char **argv) {
   int port = 9090;
   ::std::shared_ptr<TSocket> socket(new TSocket("localhost", port));
+  //::std::shared_ptr<TSocket> socket(new TSocket("hshih@c220g2-011121.wisc.cloudlab.us", 22));
   ::std::shared_ptr<TTransport> transport(new TBufferedTransport(socket));
   ::std::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
   std::string message = "Hello Server! sent from client";
