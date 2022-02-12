@@ -48,7 +48,7 @@ int main(int argc, char **argv) {
   }
   std::cout << "String (size:" << str2.size() << ") packing time(nanosec)\n";
   for (int i = 0; i < 20; ++i) {
-  string _return;
+  std::string _return;
 	client.stringPacking(_return, str2);
   }
   std::cout << "Stucture packing time(nanosec)\n";
