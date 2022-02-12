@@ -11,7 +11,8 @@
 #include <thrift/async/TConcurrentClientSyncInfo.h>
 #include <memory>
 #include "roundTrip_types.h"
-
+#include <time.h>
+#include <iostream>
 
 
 #ifdef _MSC_VER
