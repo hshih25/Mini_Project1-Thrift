@@ -21,21 +21,25 @@ class ServHandler : virtual public ServIf {
   int32_t intPacking(const int32_t num1) {
     // Your implementation goes here
     printf("intPacking\n");
+    return num1;
   }
 
   double doublePacking(const double num2) {
     // Your implementation goes here
     printf("doublePacking\n");
+    return num2;
   }
 
   void stringPacking(std::string& _return, const std::string& str1) {
     // Your implementation goes here
     printf("stringPacking\n");
+    _return = str1;
   }
 
   void structPacking(heavy& _return, const heavy& h) {
     // Your implementation goes here
     printf("structPacking\n");
+    _return = h;
   }
 
 };
