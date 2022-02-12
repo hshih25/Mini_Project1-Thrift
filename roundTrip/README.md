@@ -1,6 +1,6 @@
 # Round Trip Measurement
 
-This part is to mesure the round trip with one machine or two machines.
+This part is to mesure the round trip with one machine and two machines.
 
 ## Compilation
 
