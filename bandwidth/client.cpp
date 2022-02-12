@@ -23,6 +23,7 @@ int main(int argc, char **argv) {
   std::string base = message + message;
   base += base;
   base += base;
+  message = base;
   struct timespec start;
   ServClient client(protocol);
   transport->open();
