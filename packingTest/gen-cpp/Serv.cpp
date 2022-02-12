@@ -75,8 +75,6 @@ Serv_intPacking_pargs::~Serv_intPacking_pargs() noexcept {
 
 uint32_t Serv_intPacking_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  struct timespec start, end;
-  clock_gettime(CLOCK_REALTIME, &start);
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("Serv_intPacking_pargs");
 
@@ -86,8 +84,6 @@ uint32_t Serv_intPacking_pargs::write(::apache::thrift::protocol::TProtocol* opr
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
-  clock_gettime(CLOCK_REALTIME, &end);
-  std::cout << end.tv_nsec - start.tv_nsec << "     ";
   return xfer;
 }
 
@@ -115,7 +111,20 @@ uint32_t Serv_intPacking_result::read(::apache::thrift::protocol::TProtocol* ipr
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    xfer += iprot->skip(ftype);
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->success);
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
     xfer += iprot->readFieldEnd();
   }
 
@@ -130,6 +139,11 @@ uint32_t Serv_intPacking_result::write(::apache::thrift::protocol::TProtocol* op
 
   xfer += oprot->writeStructBegin("Serv_intPacking_result");
 
+  if (this->__isset.success) {
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
+    xfer += oprot->writeI32(this->success);
+    xfer += oprot->writeFieldEnd();
+  }
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
@@ -147,26 +161,37 @@ uint32_t Serv_intPacking_presult::read(::apache::thrift::protocol::TProtocol* ip
   std::string fname;
   ::apache::thrift::protocol::TType ftype;
   int16_t fid;
-  struct timespec start, end;
-  clock_gettime(CLOCK_REALTIME, &start);
+
   xfer += iprot->readStructBegin(fname);
 
   using ::apache::thrift::protocol::TProtocolException;
 
-  
+
   while (true)
   {
     xfer += iprot->readFieldBegin(fname, ftype, fid);
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    xfer += iprot->skip(ftype);
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32((*(this->success)));
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
     xfer += iprot->readFieldEnd();
   }
 
   xfer += iprot->readStructEnd();
-  clock_gettime(CLOCK_REALTIME, &end);
-  std::cout << end.tv_nsec - start.tv_nsec << "\n";
+
   return xfer;
 }
 
@@ -237,8 +262,6 @@ Serv_doublePacking_pargs::~Serv_doublePacking_pargs() noexcept {
 
 uint32_t Serv_doublePacking_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  struct timespec start, end;
-  clock_gettime(CLOCK_REALTIME, &start);
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("Serv_doublePacking_pargs");
 
@@ -248,8 +271,6 @@ uint32_t Serv_doublePacking_pargs::write(::apache::thrift::protocol::TProtocol* 
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
-  clock_gettime(CLOCK_REALTIME, &end);
-  std::cout << end.tv_nsec - start.tv_nsec << "     ";  
   return xfer;
 }
 
@@ -277,7 +298,20 @@ uint32_t Serv_doublePacking_result::read(::apache::thrift::protocol::TProtocol* 
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    xfer += iprot->skip(ftype);
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_DOUBLE) {
+          xfer += iprot->readDouble(this->success);
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
     xfer += iprot->readFieldEnd();
   }
 
@@ -292,6 +326,11 @@ uint32_t Serv_doublePacking_result::write(::apache::thrift::protocol::TProtocol*
 
   xfer += oprot->writeStructBegin("Serv_doublePacking_result");
 
+  if (this->__isset.success) {
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_DOUBLE, 0);
+    xfer += oprot->writeDouble(this->success);
+    xfer += oprot->writeFieldEnd();
+  }
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
@@ -307,12 +346,9 @@ uint32_t Serv_doublePacking_presult::read(::apache::thrift::protocol::TProtocol*
   ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
   uint32_t xfer = 0;
   std::string fname;
-  struct timespec start, end;
-
   ::apache::thrift::protocol::TType ftype;
   int16_t fid;
 
-  clock_gettime(CLOCK_REALTIME, &start);
   xfer += iprot->readStructBegin(fname);
 
   using ::apache::thrift::protocol::TProtocolException;
@@ -324,13 +360,25 @@ uint32_t Serv_doublePacking_presult::read(::apache::thrift::protocol::TProtocol*
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    xfer += iprot->skip(ftype);
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_DOUBLE) {
+          xfer += iprot->readDouble((*(this->success)));
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
     xfer += iprot->readFieldEnd();
   }
 
   xfer += iprot->readStructEnd();
-  clock_gettime(CLOCK_REALTIME, &end);
-  std::cout << end.tv_nsec - start.tv_nsec << "\n";
+
   return xfer;
 }
 
@@ -401,8 +449,6 @@ Serv_stringPacking_pargs::~Serv_stringPacking_pargs() noexcept {
 
 uint32_t Serv_stringPacking_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  struct timespec start, end;
-  clock_gettime(CLOCK_REALTIME, &start);  
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("Serv_stringPacking_pargs");
 
@@ -412,8 +458,6 @@ uint32_t Serv_stringPacking_pargs::write(::apache::thrift::protocol::TProtocol* 
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
-  clock_gettime(CLOCK_REALTIME, &end);
-  std::cout << end.tv_nsec - start.tv_nsec << "     ";
   return xfer;
 }
 
@@ -441,7 +485,20 @@ uint32_t Serv_stringPacking_result::read(::apache::thrift::protocol::TProtocol* 
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    xfer += iprot->skip(ftype);
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->success);
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
     xfer += iprot->readFieldEnd();
   }
 
@@ -456,6 +513,11 @@ uint32_t Serv_stringPacking_result::write(::apache::thrift::protocol::TProtocol*
 
   xfer += oprot->writeStructBegin("Serv_stringPacking_result");
 
+  if (this->__isset.success) {
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_STRING, 0);
+    xfer += oprot->writeString(this->success);
+    xfer += oprot->writeFieldEnd();
+  }
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
@@ -473,9 +535,9 @@ uint32_t Serv_stringPacking_presult::read(::apache::thrift::protocol::TProtocol*
   std::string fname;
   ::apache::thrift::protocol::TType ftype;
   int16_t fid;
-  struct timespec start, end;
+
   xfer += iprot->readStructBegin(fname);
-  clock_gettime(CLOCK_REALTIME, &start);
+
   using ::apache::thrift::protocol::TProtocolException;
 
 
@@ -485,13 +547,25 @@ uint32_t Serv_stringPacking_presult::read(::apache::thrift::protocol::TProtocol*
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    xfer += iprot->skip(ftype);
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString((*(this->success)));
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
     xfer += iprot->readFieldEnd();
   }
 
   xfer += iprot->readStructEnd();
-  clock_gettime(CLOCK_REALTIME, &end);
-  std::cout << end.tv_nsec - start.tv_nsec << "\n";
+
   return xfer;
 }
 
@@ -507,8 +581,7 @@ uint32_t Serv_structPacking_args::read(::apache::thrift::protocol::TProtocol* ip
   std::string fname;
   ::apache::thrift::protocol::TType ftype;
   int16_t fid;
-  struct timespec start, end;
-  clock_gettime(CLOCK_REALTIME, &start);
+
   xfer += iprot->readStructBegin(fname);
 
   using ::apache::thrift::protocol::TProtocolException;
@@ -538,8 +611,7 @@ uint32_t Serv_structPacking_args::read(::apache::thrift::protocol::TProtocol* ip
   }
 
   xfer += iprot->readStructEnd();
-  clock_gettime(CLOCK_REALTIME, &end);
-  std::cout << end.tv_nsec - start.tv_nsec << "\n";
+
   return xfer;
 }
 
@@ -564,8 +636,6 @@ Serv_structPacking_pargs::~Serv_structPacking_pargs() noexcept {
 
 uint32_t Serv_structPacking_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  struct timespec start, end;
-  clock_gettime(CLOCK_REALTIME, &start);
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("Serv_structPacking_pargs");
 
@@ -575,8 +645,6 @@ uint32_t Serv_structPacking_pargs::write(::apache::thrift::protocol::TProtocol* 
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
-  clock_gettime(CLOCK_REALTIME, &end);
-  std::cout << end.tv_nsec - start.tv_nsec << "     ";
   return xfer;
 }
 
@@ -604,7 +672,20 @@ uint32_t Serv_structPacking_result::read(::apache::thrift::protocol::TProtocol* 
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    xfer += iprot->skip(ftype);
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->success.read(iprot);
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
     xfer += iprot->readFieldEnd();
   }
 
@@ -619,6 +700,11 @@ uint32_t Serv_structPacking_result::write(::apache::thrift::protocol::TProtocol*
 
   xfer += oprot->writeStructBegin("Serv_structPacking_result");
 
+  if (this->__isset.success) {
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_STRUCT, 0);
+    xfer += this->success.write(oprot);
+    xfer += oprot->writeFieldEnd();
+  }
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
@@ -636,8 +722,6 @@ uint32_t Serv_structPacking_presult::read(::apache::thrift::protocol::TProtocol*
   std::string fname;
   ::apache::thrift::protocol::TType ftype;
   int16_t fid;
-  struct timespec start, end;
-  clock_gettime(CLOCK_REALTIME, &start);  
 
   xfer += iprot->readStructBegin(fname);
 
@@ -650,48 +734,55 @@ uint32_t Serv_structPacking_presult::read(::apache::thrift::protocol::TProtocol*
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    xfer += iprot->skip(ftype);
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += (*(this->success)).read(iprot);
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
     xfer += iprot->readFieldEnd();
   }
 
   xfer += iprot->readStructEnd();
-  clock_gettime(CLOCK_REALTIME, &end);
-  std::cout << end.tv_nsec - start.tv_nsec << "\n";
+
   return xfer;
 }
 
-void ServClient::intPacking(const int32_t num1)
+int32_t ServClient::intPacking(const int32_t num1)
 {
   send_intPacking(num1);
-  recv_intPacking();
+  return recv_intPacking();
 }
 
 void ServClient::send_intPacking(const int32_t num1)
 {
   int32_t cseqid = 0;
-  
   oprot_->writeMessageBegin("intPacking", ::apache::thrift::protocol::T_CALL, cseqid);
-  
+
   Serv_intPacking_pargs args;
   args.num1 = &num1;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
-  
-
   oprot_->getTransport()->writeEnd();
   oprot_->getTransport()->flush();
 }
 
-void ServClient::recv_intPacking()
+int32_t ServClient::recv_intPacking()
 {
 
   int32_t rseqid = 0;
-
   std::string fname;
   ::apache::thrift::protocol::TMessageType mtype;
-  
-  
+
   iprot_->readMessageBegin(fname, mtype, rseqid);
   if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
     ::apache::thrift::TApplicationException x;
@@ -710,26 +801,28 @@ void ServClient::recv_intPacking()
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
+  int32_t _return;
   Serv_intPacking_presult result;
+  result.success = &_return;
   result.read(iprot_);
-  
   iprot_->readMessageEnd();
   iprot_->getTransport()->readEnd();
 
-  return;
+  if (result.__isset.success) {
+    return _return;
+  }
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "intPacking failed: unknown result");
 }
 
-void ServClient::doublePacking(const double num2)
+double ServClient::doublePacking(const double num2)
 {
   send_doublePacking(num2);
-  recv_doublePacking();
+  return recv_doublePacking();
 }
 
 void ServClient::send_doublePacking(const double num2)
 {
   int32_t cseqid = 0;
-  
-  
   oprot_->writeMessageBegin("doublePacking", ::apache::thrift::protocol::T_CALL, cseqid);
 
   Serv_doublePacking_pargs args;
@@ -737,20 +830,16 @@ void ServClient::send_doublePacking(const double num2)
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
-  
-
   oprot_->getTransport()->writeEnd();
   oprot_->getTransport()->flush();
 }
 
-void ServClient::recv_doublePacking()
+double ServClient::recv_doublePacking()
 {
 
   int32_t rseqid = 0;
   std::string fname;
-  
   ::apache::thrift::protocol::TMessageType mtype;
-  
 
   iprot_->readMessageBegin(fname, mtype, rseqid);
   if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
@@ -770,27 +859,28 @@ void ServClient::recv_doublePacking()
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
+  double _return;
   Serv_doublePacking_presult result;
+  result.success = &_return;
   result.read(iprot_);
-  
-
   iprot_->readMessageEnd();
   iprot_->getTransport()->readEnd();
 
-  return;
+  if (result.__isset.success) {
+    return _return;
+  }
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "doublePacking failed: unknown result");
 }
 
-void ServClient::stringPacking(const std::string& str1)
+void ServClient::stringPacking(std::string& _return, const std::string& str1)
 {
   send_stringPacking(str1);
-  recv_stringPacking();
+  recv_stringPacking(_return);
 }
 
 void ServClient::send_stringPacking(const std::string& str1)
 {
   int32_t cseqid = 0;
-  
-
   oprot_->writeMessageBegin("stringPacking", ::apache::thrift::protocol::T_CALL, cseqid);
 
   Serv_stringPacking_pargs args;
@@ -798,19 +888,16 @@ void ServClient::send_stringPacking(const std::string& str1)
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
-  
   oprot_->getTransport()->writeEnd();
   oprot_->getTransport()->flush();
 }
 
-void ServClient::recv_stringPacking()
+void ServClient::recv_stringPacking(std::string& _return)
 {
 
   int32_t rseqid = 0;
   std::string fname;
-  
   ::apache::thrift::protocol::TMessageType mtype;
-  
 
   iprot_->readMessageBegin(fname, mtype, rseqid);
   if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
@@ -831,24 +918,27 @@ void ServClient::recv_stringPacking()
     iprot_->getTransport()->readEnd();
   }
   Serv_stringPacking_presult result;
+  result.success = &_return;
   result.read(iprot_);
-  
   iprot_->readMessageEnd();
   iprot_->getTransport()->readEnd();
 
-  return;
+  if (result.__isset.success) {
+    // _return pointer has now been filled
+    return;
+  }
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "stringPacking failed: unknown result");
 }
 
-void ServClient::structPacking(const heavy& h)
+void ServClient::structPacking(heavy& _return, const heavy& h)
 {
   send_structPacking(h);
-  recv_structPacking();
+  recv_structPacking(_return);
 }
 
 void ServClient::send_structPacking(const heavy& h)
 {
   int32_t cseqid = 0;
-  
   oprot_->writeMessageBegin("structPacking", ::apache::thrift::protocol::T_CALL, cseqid);
 
   Serv_structPacking_pargs args;
@@ -856,19 +946,17 @@ void ServClient::send_structPacking(const heavy& h)
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
-  
   oprot_->getTransport()->writeEnd();
   oprot_->getTransport()->flush();
 }
 
-void ServClient::recv_structPacking()
+void ServClient::recv_structPacking(heavy& _return)
 {
 
   int32_t rseqid = 0;
   std::string fname;
-  
   ::apache::thrift::protocol::TMessageType mtype;
-  
+
   iprot_->readMessageBegin(fname, mtype, rseqid);
   if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
     ::apache::thrift::TApplicationException x;
@@ -888,12 +976,16 @@ void ServClient::recv_structPacking()
     iprot_->getTransport()->readEnd();
   }
   Serv_structPacking_presult result;
+  result.success = &_return;
   result.read(iprot_);
-  
   iprot_->readMessageEnd();
   iprot_->getTransport()->readEnd();
 
-  return;
+  if (result.__isset.success) {
+    // _return pointer has now been filled
+    return;
+  }
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "structPacking failed: unknown result");
 }
 
 bool ServProcessor::dispatchCall(::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, const std::string& fname, int32_t seqid, void* callContext) {
@@ -938,7 +1030,8 @@ void ServProcessor::process_intPacking(int32_t seqid, ::apache::thrift::protocol
 
   Serv_intPacking_result result;
   try {
-    iface_->intPacking(args.num1);
+    result.success = iface_->intPacking(args.num1);
+    result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != nullptr) {
       this->eventHandler_->handlerError(ctx, "Serv.intPacking");
@@ -991,7 +1084,8 @@ void ServProcessor::process_doublePacking(int32_t seqid, ::apache::thrift::proto
 
   Serv_doublePacking_result result;
   try {
-    iface_->doublePacking(args.num2);
+    result.success = iface_->doublePacking(args.num2);
+    result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != nullptr) {
       this->eventHandler_->handlerError(ctx, "Serv.doublePacking");
@@ -1044,7 +1138,8 @@ void ServProcessor::process_stringPacking(int32_t seqid, ::apache::thrift::proto
 
   Serv_stringPacking_result result;
   try {
-    iface_->stringPacking(args.str1);
+    iface_->stringPacking(result.success, args.str1);
+    result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != nullptr) {
       this->eventHandler_->handlerError(ctx, "Serv.stringPacking");
@@ -1097,7 +1192,8 @@ void ServProcessor::process_structPacking(int32_t seqid, ::apache::thrift::proto
 
   Serv_structPacking_result result;
   try {
-    iface_->structPacking(args.h);
+    iface_->structPacking(result.success, args.h);
+    result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != nullptr) {
       this->eventHandler_->handlerError(ctx, "Serv.structPacking");
@@ -1134,10 +1230,10 @@ void ServProcessor::process_structPacking(int32_t seqid, ::apache::thrift::proto
   return processor;
 }
 
-void ServConcurrentClient::intPacking(const int32_t num1)
+int32_t ServConcurrentClient::intPacking(const int32_t num1)
 {
   int32_t seqid = send_intPacking(num1);
-  recv_intPacking(seqid);
+  return recv_intPacking(seqid);
 }
 
 int32_t ServConcurrentClient::send_intPacking(const int32_t num1)
@@ -1158,7 +1254,7 @@ int32_t ServConcurrentClient::send_intPacking(const int32_t num1)
   return cseqid;
 }
 
-void ServConcurrentClient::recv_intPacking(const int32_t seqid)
+int32_t ServConcurrentClient::recv_intPacking(const int32_t seqid)
 {
 
   int32_t rseqid = 0;
@@ -1196,13 +1292,19 @@ void ServConcurrentClient::recv_intPacking(const int32_t seqid)
         using ::apache::thrift::protocol::TProtocolException;
         throw TProtocolException(TProtocolException::INVALID_DATA);
       }
+      int32_t _return;
       Serv_intPacking_presult result;
+      result.success = &_return;
       result.read(iprot_);
       iprot_->readMessageEnd();
       iprot_->getTransport()->readEnd();
 
-      sentry.commit();
-      return;
+      if (result.__isset.success) {
+        sentry.commit();
+        return _return;
+      }
+      // in a bad state, don't commit
+      throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "intPacking failed: unknown result");
     }
     // seqid != rseqid
     this->sync_->updatePending(fname, mtype, rseqid);
@@ -1212,10 +1314,10 @@ void ServConcurrentClient::recv_intPacking(const int32_t seqid)
   } // end while(true)
 }
 
-void ServConcurrentClient::doublePacking(const double num2)
+double ServConcurrentClient::doublePacking(const double num2)
 {
   int32_t seqid = send_doublePacking(num2);
-  recv_doublePacking(seqid);
+  return recv_doublePacking(seqid);
 }
 
 int32_t ServConcurrentClient::send_doublePacking(const double num2)
@@ -1236,7 +1338,7 @@ int32_t ServConcurrentClient::send_doublePacking(const double num2)
   return cseqid;
 }
 
-void ServConcurrentClient::recv_doublePacking(const int32_t seqid)
+double ServConcurrentClient::recv_doublePacking(const int32_t seqid)
 {
 
   int32_t rseqid = 0;
@@ -1274,13 +1376,19 @@ void ServConcurrentClient::recv_doublePacking(const int32_t seqid)
         using ::apache::thrift::protocol::TProtocolException;
         throw TProtocolException(TProtocolException::INVALID_DATA);
       }
+      double _return;
       Serv_doublePacking_presult result;
+      result.success = &_return;
       result.read(iprot_);
       iprot_->readMessageEnd();
       iprot_->getTransport()->readEnd();
 
-      sentry.commit();
-      return;
+      if (result.__isset.success) {
+        sentry.commit();
+        return _return;
+      }
+      // in a bad state, don't commit
+      throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "doublePacking failed: unknown result");
     }
     // seqid != rseqid
     this->sync_->updatePending(fname, mtype, rseqid);
@@ -1290,10 +1398,10 @@ void ServConcurrentClient::recv_doublePacking(const int32_t seqid)
   } // end while(true)
 }
 
-void ServConcurrentClient::stringPacking(const std::string& str1)
+void ServConcurrentClient::stringPacking(std::string& _return, const std::string& str1)
 {
   int32_t seqid = send_stringPacking(str1);
-  recv_stringPacking(seqid);
+  recv_stringPacking(_return, seqid);
 }
 
 int32_t ServConcurrentClient::send_stringPacking(const std::string& str1)
@@ -1314,7 +1422,7 @@ int32_t ServConcurrentClient::send_stringPacking(const std::string& str1)
   return cseqid;
 }
 
-void ServConcurrentClient::recv_stringPacking(const int32_t seqid)
+void ServConcurrentClient::recv_stringPacking(std::string& _return, const int32_t seqid)
 {
 
   int32_t rseqid = 0;
@@ -1353,12 +1461,18 @@ void ServConcurrentClient::recv_stringPacking(const int32_t seqid)
         throw TProtocolException(TProtocolException::INVALID_DATA);
       }
       Serv_stringPacking_presult result;
+      result.success = &_return;
       result.read(iprot_);
       iprot_->readMessageEnd();
       iprot_->getTransport()->readEnd();
 
-      sentry.commit();
-      return;
+      if (result.__isset.success) {
+        // _return pointer has now been filled
+        sentry.commit();
+        return;
+      }
+      // in a bad state, don't commit
+      throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "stringPacking failed: unknown result");
     }
     // seqid != rseqid
     this->sync_->updatePending(fname, mtype, rseqid);
@@ -1368,10 +1482,10 @@ void ServConcurrentClient::recv_stringPacking(const int32_t seqid)
   } // end while(true)
 }
 
-void ServConcurrentClient::structPacking(const heavy& h)
+void ServConcurrentClient::structPacking(heavy& _return, const heavy& h)
 {
   int32_t seqid = send_structPacking(h);
-  recv_structPacking(seqid);
+  recv_structPacking(_return, seqid);
 }
 
 int32_t ServConcurrentClient::send_structPacking(const heavy& h)
@@ -1392,7 +1506,7 @@ int32_t ServConcurrentClient::send_structPacking(const heavy& h)
   return cseqid;
 }
 
-void ServConcurrentClient::recv_structPacking(const int32_t seqid)
+void ServConcurrentClient::recv_structPacking(heavy& _return, const int32_t seqid)
 {
 
   int32_t rseqid = 0;
@@ -1431,12 +1545,18 @@ void ServConcurrentClient::recv_structPacking(const int32_t seqid)
         throw TProtocolException(TProtocolException::INVALID_DATA);
       }
       Serv_structPacking_presult result;
+      result.success = &_return;
       result.read(iprot_);
       iprot_->readMessageEnd();
       iprot_->getTransport()->readEnd();
 
-      sentry.commit();
-      return;
+      if (result.__isset.success) {
+        // _return pointer has now been filled
+        sentry.commit();
+        return;
+      }
+      // in a bad state, don't commit
+      throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "structPacking failed: unknown result");
     }
     // seqid != rseqid
     this->sync_->updatePending(fname, mtype, rseqid);

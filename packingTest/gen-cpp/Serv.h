@@ -11,8 +11,7 @@
 #include <thrift/async/TConcurrentClientSyncInfo.h>
 #include <memory>
 #include "packing_types.h"
-#include <time.h>
-#include <iostream>
+
 
 
 #ifdef _MSC_VER
@@ -23,10 +22,10 @@
 class ServIf {
  public:
   virtual ~ServIf() {}
-  virtual void intPacking(const int32_t num1) = 0;
-  virtual void doublePacking(const double num2) = 0;
-  virtual void stringPacking(const std::string& str1) = 0;
-  virtual void structPacking(const heavy& h) = 0;
+  virtual int32_t intPacking(const int32_t num1) = 0;
+  virtual double doublePacking(const double num2) = 0;
+  virtual void stringPacking(std::string& _return, const std::string& str1) = 0;
+  virtual void structPacking(heavy& _return, const heavy& h) = 0;
 };
 
 class ServIfFactory {
@@ -56,16 +55,18 @@ class ServIfSingletonFactory : virtual public ServIfFactory {
 class ServNull : virtual public ServIf {
  public:
   virtual ~ServNull() {}
-  void intPacking(const int32_t /* num1 */) override {
+  int32_t intPacking(const int32_t /* num1 */) override {
+    int32_t _return = 0;
+    return _return;
+  }
+  double doublePacking(const double /* num2 */) override {
+    double _return = 0.0;
+    return _return;
+  }
+  void stringPacking(std::string& /* _return */, const std::string& /* str1 */) override {
     return;
   }
-  void doublePacking(const double /* num2 */) override {
-    return;
-  }
-  void stringPacking(const std::string& /* str1 */) override {
-    return;
-  }
-  void structPacking(const heavy& /* h */) override {
+  void structPacking(heavy& /* _return */, const heavy& /* h */) override {
     return;
   }
 };
@@ -120,19 +121,31 @@ class Serv_intPacking_pargs {
 
 };
 
+typedef struct _Serv_intPacking_result__isset {
+  _Serv_intPacking_result__isset() : success(false) {}
+  bool success :1;
+} _Serv_intPacking_result__isset;
 
 class Serv_intPacking_result {
  public:
 
   Serv_intPacking_result(const Serv_intPacking_result&) noexcept;
   Serv_intPacking_result& operator=(const Serv_intPacking_result&) noexcept;
-  Serv_intPacking_result() noexcept {
+  Serv_intPacking_result() noexcept
+                         : success(0) {
   }
 
   virtual ~Serv_intPacking_result() noexcept;
+  int32_t success;
 
-  bool operator == (const Serv_intPacking_result & /* rhs */) const
+  _Serv_intPacking_result__isset __isset;
+
+  void __set_success(const int32_t val);
+
+  bool operator == (const Serv_intPacking_result & rhs) const
   {
+    if (!(success == rhs.success))
+      return false;
     return true;
   }
   bool operator != (const Serv_intPacking_result &rhs) const {
@@ -146,12 +159,19 @@ class Serv_intPacking_result {
 
 };
 
+typedef struct _Serv_intPacking_presult__isset {
+  _Serv_intPacking_presult__isset() : success(false) {}
+  bool success :1;
+} _Serv_intPacking_presult__isset;
 
 class Serv_intPacking_presult {
  public:
 
 
   virtual ~Serv_intPacking_presult() noexcept;
+  int32_t* success;
+
+  _Serv_intPacking_presult__isset __isset;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
 
@@ -207,19 +227,31 @@ class Serv_doublePacking_pargs {
 
 };
 
+typedef struct _Serv_doublePacking_result__isset {
+  _Serv_doublePacking_result__isset() : success(false) {}
+  bool success :1;
+} _Serv_doublePacking_result__isset;
 
 class Serv_doublePacking_result {
  public:
 
   Serv_doublePacking_result(const Serv_doublePacking_result&) noexcept;
   Serv_doublePacking_result& operator=(const Serv_doublePacking_result&) noexcept;
-  Serv_doublePacking_result() noexcept {
+  Serv_doublePacking_result() noexcept
+                            : success(0) {
   }
 
   virtual ~Serv_doublePacking_result() noexcept;
+  double success;
 
-  bool operator == (const Serv_doublePacking_result & /* rhs */) const
+  _Serv_doublePacking_result__isset __isset;
+
+  void __set_success(const double val);
+
+  bool operator == (const Serv_doublePacking_result & rhs) const
   {
+    if (!(success == rhs.success))
+      return false;
     return true;
   }
   bool operator != (const Serv_doublePacking_result &rhs) const {
@@ -233,12 +265,19 @@ class Serv_doublePacking_result {
 
 };
 
+typedef struct _Serv_doublePacking_presult__isset {
+  _Serv_doublePacking_presult__isset() : success(false) {}
+  bool success :1;
+} _Serv_doublePacking_presult__isset;
 
 class Serv_doublePacking_presult {
  public:
 
 
   virtual ~Serv_doublePacking_presult() noexcept;
+  double* success;
+
+  _Serv_doublePacking_presult__isset __isset;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
 
@@ -294,19 +333,31 @@ class Serv_stringPacking_pargs {
 
 };
 
+typedef struct _Serv_stringPacking_result__isset {
+  _Serv_stringPacking_result__isset() : success(false) {}
+  bool success :1;
+} _Serv_stringPacking_result__isset;
 
 class Serv_stringPacking_result {
  public:
 
-  Serv_stringPacking_result(const Serv_stringPacking_result&) noexcept;
-  Serv_stringPacking_result& operator=(const Serv_stringPacking_result&) noexcept;
-  Serv_stringPacking_result() noexcept {
+  Serv_stringPacking_result(const Serv_stringPacking_result&);
+  Serv_stringPacking_result& operator=(const Serv_stringPacking_result&);
+  Serv_stringPacking_result() noexcept
+                            : success() {
   }
 
   virtual ~Serv_stringPacking_result() noexcept;
+  std::string success;
 
-  bool operator == (const Serv_stringPacking_result & /* rhs */) const
+  _Serv_stringPacking_result__isset __isset;
+
+  void __set_success(const std::string& val);
+
+  bool operator == (const Serv_stringPacking_result & rhs) const
   {
+    if (!(success == rhs.success))
+      return false;
     return true;
   }
   bool operator != (const Serv_stringPacking_result &rhs) const {
@@ -320,12 +371,19 @@ class Serv_stringPacking_result {
 
 };
 
+typedef struct _Serv_stringPacking_presult__isset {
+  _Serv_stringPacking_presult__isset() : success(false) {}
+  bool success :1;
+} _Serv_stringPacking_presult__isset;
 
 class Serv_stringPacking_presult {
  public:
 
 
   virtual ~Serv_stringPacking_presult() noexcept;
+  std::string* success;
+
+  _Serv_stringPacking_presult__isset __isset;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
 
@@ -380,19 +438,30 @@ class Serv_structPacking_pargs {
 
 };
 
+typedef struct _Serv_structPacking_result__isset {
+  _Serv_structPacking_result__isset() : success(false) {}
+  bool success :1;
+} _Serv_structPacking_result__isset;
 
 class Serv_structPacking_result {
  public:
 
-  Serv_structPacking_result(const Serv_structPacking_result&) noexcept;
-  Serv_structPacking_result& operator=(const Serv_structPacking_result&) noexcept;
+  Serv_structPacking_result(const Serv_structPacking_result&);
+  Serv_structPacking_result& operator=(const Serv_structPacking_result&);
   Serv_structPacking_result() noexcept {
   }
 
   virtual ~Serv_structPacking_result() noexcept;
+  heavy success;
 
-  bool operator == (const Serv_structPacking_result & /* rhs */) const
+  _Serv_structPacking_result__isset __isset;
+
+  void __set_success(const heavy& val);
+
+  bool operator == (const Serv_structPacking_result & rhs) const
   {
+    if (!(success == rhs.success))
+      return false;
     return true;
   }
   bool operator != (const Serv_structPacking_result &rhs) const {
@@ -406,12 +475,19 @@ class Serv_structPacking_result {
 
 };
 
+typedef struct _Serv_structPacking_presult__isset {
+  _Serv_structPacking_presult__isset() : success(false) {}
+  bool success :1;
+} _Serv_structPacking_presult__isset;
 
 class Serv_structPacking_presult {
  public:
 
 
   virtual ~Serv_structPacking_presult() noexcept;
+  heavy* success;
+
+  _Serv_structPacking_presult__isset __isset;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
 
@@ -442,18 +518,18 @@ class ServClient : virtual public ServIf {
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> getOutputProtocol() {
     return poprot_;
   }
-  void intPacking(const int32_t num1) override;
+  int32_t intPacking(const int32_t num1) override;
   void send_intPacking(const int32_t num1);
-  void recv_intPacking();
-  void doublePacking(const double num2) override;
+  int32_t recv_intPacking();
+  double doublePacking(const double num2) override;
   void send_doublePacking(const double num2);
-  void recv_doublePacking();
-  void stringPacking(const std::string& str1) override;
+  double recv_doublePacking();
+  void stringPacking(std::string& _return, const std::string& str1) override;
   void send_stringPacking(const std::string& str1);
-  void recv_stringPacking();
-  void structPacking(const heavy& h) override;
+  void recv_stringPacking(std::string& _return);
+  void structPacking(heavy& _return, const heavy& h) override;
   void send_structPacking(const heavy& h);
-  void recv_structPacking();
+  void recv_structPacking(heavy& _return);
  protected:
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot_;
@@ -508,40 +584,42 @@ class ServMultiface : virtual public ServIf {
     ifaces_.push_back(iface);
   }
  public:
-  void intPacking(const int32_t num1) override {
+  int32_t intPacking(const int32_t num1) override {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
       ifaces_[i]->intPacking(num1);
     }
-    ifaces_[i]->intPacking(num1);
+    return ifaces_[i]->intPacking(num1);
   }
 
-  void doublePacking(const double num2) override {
+  double doublePacking(const double num2) override {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
       ifaces_[i]->doublePacking(num2);
     }
-    ifaces_[i]->doublePacking(num2);
+    return ifaces_[i]->doublePacking(num2);
   }
 
-  void stringPacking(const std::string& str1) override {
+  void stringPacking(std::string& _return, const std::string& str1) override {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->stringPacking(str1);
+      ifaces_[i]->stringPacking(_return, str1);
     }
-    ifaces_[i]->stringPacking(str1);
+    ifaces_[i]->stringPacking(_return, str1);
+    return;
   }
 
-  void structPacking(const heavy& h) override {
+  void structPacking(heavy& _return, const heavy& h) override {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->structPacking(h);
+      ifaces_[i]->structPacking(_return, h);
     }
-    ifaces_[i]->structPacking(h);
+    ifaces_[i]->structPacking(_return, h);
+    return;
   }
 
 };
@@ -576,18 +654,18 @@ class ServConcurrentClient : virtual public ServIf {
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> getOutputProtocol() {
     return poprot_;
   }
-  void intPacking(const int32_t num1) override;
+  int32_t intPacking(const int32_t num1) override;
   int32_t send_intPacking(const int32_t num1);
-  void recv_intPacking(const int32_t seqid);
-  void doublePacking(const double num2) override;
+  int32_t recv_intPacking(const int32_t seqid);
+  double doublePacking(const double num2) override;
   int32_t send_doublePacking(const double num2);
-  void recv_doublePacking(const int32_t seqid);
-  void stringPacking(const std::string& str1) override;
+  double recv_doublePacking(const int32_t seqid);
+  void stringPacking(std::string& _return, const std::string& str1) override;
   int32_t send_stringPacking(const std::string& str1);
-  void recv_stringPacking(const int32_t seqid);
-  void structPacking(const heavy& h) override;
+  void recv_stringPacking(std::string& _return, const int32_t seqid);
+  void structPacking(heavy& _return, const heavy& h) override;
   int32_t send_structPacking(const heavy& h);
-  void recv_structPacking(const int32_t seqid);
+  void recv_structPacking(heavy& _return, const int32_t seqid);
  protected:
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot_;
