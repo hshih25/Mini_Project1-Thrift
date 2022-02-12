@@ -16,9 +16,10 @@ int main(int argc, char **argv) {
   
   int port = 9090;
   
-  
-  //::std::shared_ptr<TSocket> socket(new TSocket("localhost", port));
-  ::std::shared_ptr<TSocket> socket(new TSocket("10.10.1.1", port));
+  if (argc == 1)
+    ::std::shared_ptr<TSocket> socket(new TSocket("localhost", port));
+  else
+    ::std::shared_ptr<TSocket> socket(new TSocket("10.10.1.1", port));
  
   ::std::shared_ptr<TTransport> transport(new TBufferedTransport(socket));
   ::std::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
