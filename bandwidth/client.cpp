@@ -28,7 +28,7 @@ int main(int argc, char **argv) {
   ServClient client(protocol);
   transport->open();
   std::cout << "Message size     bandwidth(mb/s)\n";  
-  for (int i = 0; i < 100; ++i) {
+  for (int i = 0; i < 500; ++i) {
 	std::vector<int64_t> time;
   	clock_gettime(CLOCK_MONOTONIC, &start);
 	int64_t sec = start.tv_sec;
