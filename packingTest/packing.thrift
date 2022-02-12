@@ -13,8 +13,8 @@ struct heavy{
 }
 
 service Serv{
-	void intPacking(1: i32 num1),
-	void doublePacking(1: double num2),
-	void stringPacking(1: string str1),
-	void structPacking(1: heavy h)
+	i32 intPacking(1: i32 num1),
+	double doublePacking(1: double num2),
+	string stringPacking(1: string str1),
+	heavy structPacking(1: heavy h)
 }
