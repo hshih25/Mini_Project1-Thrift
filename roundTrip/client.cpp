@@ -29,7 +29,7 @@ int main(int argc, char **argv) {
   struct timespec start, end;
   ServClient client(protocol);
   transport->open();
-  std::cout << "RoundTrip    Request    Response" << "\n";
+  std::cout << "Request    Response" << "\n";
   for (int i = 0; i < 20; ++i) {
   std::vector<int64_t> curr;
  	client.send(curr, message);  
