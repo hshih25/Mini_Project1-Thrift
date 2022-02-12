@@ -75,6 +75,8 @@ Serv_intPacking_pargs::~Serv_intPacking_pargs() noexcept {
 
 uint32_t Serv_intPacking_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
+  struct timespec start, end;
+  clock_gettime(CLOCK_REALTIME, &start);
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("Serv_intPacking_pargs");
 
@@ -84,6 +86,8 @@ uint32_t Serv_intPacking_pargs::write(::apache::thrift::protocol::TProtocol* opr
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
+  clock_gettime(CLOCK_REALTIME, &end);
+  std::cout << end.tv_nsec - start.tv_nsec << "     ";
   return xfer;
 }
 
@@ -233,6 +237,8 @@ Serv_doublePacking_pargs::~Serv_doublePacking_pargs() noexcept {
 
 uint32_t Serv_doublePacking_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
+  struct timespec start, end;
+  clock_gettime(CLOCK_REALTIME, &start);
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("Serv_doublePacking_pargs");
 
@@ -242,6 +248,8 @@ uint32_t Serv_doublePacking_pargs::write(::apache::thrift::protocol::TProtocol* 
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
+  clock_gettime(CLOCK_REALTIME, &end);
+  std::cout << end.tv_nsec - start.tv_nsec << "     ";  
   return xfer;
 }
 
@@ -299,9 +307,12 @@ uint32_t Serv_doublePacking_presult::read(::apache::thrift::protocol::TProtocol*
   ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
   uint32_t xfer = 0;
   std::string fname;
+  struct timespec start, end;
+
   ::apache::thrift::protocol::TType ftype;
   int16_t fid;
 
+  clock_gettime(CLOCK_REALTIME, &start);
   xfer += iprot->readStructBegin(fname);
 
   using ::apache::thrift::protocol::TProtocolException;
@@ -318,7 +329,8 @@ uint32_t Serv_doublePacking_presult::read(::apache::thrift::protocol::TProtocol*
   }
 
   xfer += iprot->readStructEnd();
-
+  clock_gettime(CLOCK_REALTIME, &end);
+  std::cout << end.tv_nsec - start.tv_nsec << "\n";
   return xfer;
 }
 
@@ -389,6 +401,8 @@ Serv_stringPacking_pargs::~Serv_stringPacking_pargs() noexcept {
 
 uint32_t Serv_stringPacking_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
+  struct timespec start, end;
+  clock_gettime(CLOCK_REALTIME, &start);  
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("Serv_stringPacking_pargs");
 
@@ -398,6 +412,8 @@ uint32_t Serv_stringPacking_pargs::write(::apache::thrift::protocol::TProtocol* 
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
+  clock_gettime(CLOCK_REALTIME, &end);
+  std::cout << end.tv_nsec - start.tv_nsec << "     ";
   return xfer;
 }
 
@@ -457,9 +473,9 @@ uint32_t Serv_stringPacking_presult::read(::apache::thrift::protocol::TProtocol*
   std::string fname;
   ::apache::thrift::protocol::TType ftype;
   int16_t fid;
-
+  struct timespec start, end;
   xfer += iprot->readStructBegin(fname);
-
+  clock_gettime(CLOCK_REALTIME, &start);
   using ::apache::thrift::protocol::TProtocolException;
 
 
@@ -474,7 +490,8 @@ uint32_t Serv_stringPacking_presult::read(::apache::thrift::protocol::TProtocol*
   }
 
   xfer += iprot->readStructEnd();
-
+  clock_gettime(CLOCK_REALTIME, &end);
+  std::cout << end.tv_nsec - start.tv_nsec << "\n";
   return xfer;
 }
 
@@ -490,7 +507,8 @@ uint32_t Serv_structPacking_args::read(::apache::thrift::protocol::TProtocol* ip
   std::string fname;
   ::apache::thrift::protocol::TType ftype;
   int16_t fid;
-
+  struct timespec start, end;
+  clock_gettime(CLOCK_REALTIME, &start);
   xfer += iprot->readStructBegin(fname);
 
   using ::apache::thrift::protocol::TProtocolException;
@@ -520,7 +538,8 @@ uint32_t Serv_structPacking_args::read(::apache::thrift::protocol::TProtocol* ip
   }
 
   xfer += iprot->readStructEnd();
-
+  clock_gettime(CLOCK_REALTIME, &end);
+  std::cout << end.tv_nsec - start.tv_nsec << "\n";
   return xfer;
 }
 
@@ -545,6 +564,8 @@ Serv_structPacking_pargs::~Serv_structPacking_pargs() noexcept {
 
 uint32_t Serv_structPacking_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
+  struct timespec start, end;
+  clock_gettime(CLOCK_REALTIME, &start);
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("Serv_structPacking_pargs");
 
@@ -554,6 +575,8 @@ uint32_t Serv_structPacking_pargs::write(::apache::thrift::protocol::TProtocol* 
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
+  clock_gettime(CLOCK_REALTIME, &end);
+  std::cout << end.tv_nsec - start.tv_nsec << "     ";
   return xfer;
 }
 
@@ -643,8 +666,7 @@ void ServClient::intPacking(const int32_t num1)
 void ServClient::send_intPacking(const int32_t num1)
 {
   int32_t cseqid = 0;
-  struct timespec start, end;
-  clock_gettime(CLOCK_REALTIME, &start);
+  
   oprot_->writeMessageBegin("intPacking", ::apache::thrift::protocol::T_CALL, cseqid);
   
   Serv_intPacking_pargs args;
@@ -652,8 +674,7 @@ void ServClient::send_intPacking(const int32_t num1)
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
-  clock_gettime(CLOCK_REALTIME, &end);
-  std::cout << end.tv_nsec - start.tv_nsec << "     ";
+  
 
   oprot_->getTransport()->writeEnd();
   oprot_->getTransport()->flush();
@@ -663,11 +684,11 @@ void ServClient::recv_intPacking()
 {
 
   int32_t rseqid = 0;
-  struct timespec start, end;
+
   std::string fname;
   ::apache::thrift::protocol::TMessageType mtype;
   
-  clock_gettime(CLOCK_REALTIME, &start);
+  
   iprot_->readMessageBegin(fname, mtype, rseqid);
   if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
     ::apache::thrift::TApplicationException x;
@@ -688,8 +709,7 @@ void ServClient::recv_intPacking()
   }
   Serv_intPacking_presult result;
   result.read(iprot_);
-  clock_gettime(CLOCK_REALTIME, &end);
-  std::cout << end.tv_nsec - start.tv_nsec << "\n";
+  
   iprot_->readMessageEnd();
   iprot_->getTransport()->readEnd();
 
@@ -705,8 +725,7 @@ void ServClient::doublePacking(const double num2)
 void ServClient::send_doublePacking(const double num2)
 {
   int32_t cseqid = 0;
-  struct timespec start, end;
-  clock_gettime(CLOCK_REALTIME, &start);
+  
   
   oprot_->writeMessageBegin("doublePacking", ::apache::thrift::protocol::T_CALL, cseqid);
 
@@ -715,8 +734,7 @@ void ServClient::send_doublePacking(const double num2)
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
-  clock_gettime(CLOCK_REALTIME, &end);
-  std::cout << end.tv_nsec - start.tv_nsec << "     ";  
+  
 
   oprot_->getTransport()->writeEnd();
   oprot_->getTransport()->flush();
@@ -727,9 +745,9 @@ void ServClient::recv_doublePacking()
 
   int32_t rseqid = 0;
   std::string fname;
-  struct timespec start, end;
+  
   ::apache::thrift::protocol::TMessageType mtype;
-  clock_gettime(CLOCK_REALTIME, &start);
+  
 
   iprot_->readMessageBegin(fname, mtype, rseqid);
   if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
@@ -751,8 +769,7 @@ void ServClient::recv_doublePacking()
   }
   Serv_doublePacking_presult result;
   result.read(iprot_);
-  clock_gettime(CLOCK_REALTIME, &end);
-  std::cout << end.tv_nsec - start.tv_nsec << "\n";
+  
 
   iprot_->readMessageEnd();
   iprot_->getTransport()->readEnd();
@@ -769,8 +786,7 @@ void ServClient::stringPacking(const std::string& str1)
 void ServClient::send_stringPacking(const std::string& str1)
 {
   int32_t cseqid = 0;
-  struct timespec start, end;
-  clock_gettime(CLOCK_REALTIME, &start);  
+  
 
   oprot_->writeMessageBegin("stringPacking", ::apache::thrift::protocol::T_CALL, cseqid);
 
@@ -779,8 +795,7 @@ void ServClient::send_stringPacking(const std::string& str1)
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
-  clock_gettime(CLOCK_REALTIME, &end);
-  std::cout << end.tv_nsec - start.tv_nsec << "     ";
+  
   oprot_->getTransport()->writeEnd();
   oprot_->getTransport()->flush();
 }
@@ -790,9 +805,9 @@ void ServClient::recv_stringPacking()
 
   int32_t rseqid = 0;
   std::string fname;
-  struct timespec start, end;
+  
   ::apache::thrift::protocol::TMessageType mtype;
-  clock_gettime(CLOCK_REALTIME, &start);
+  
 
   iprot_->readMessageBegin(fname, mtype, rseqid);
   if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
@@ -814,8 +829,7 @@ void ServClient::recv_stringPacking()
   }
   Serv_stringPacking_presult result;
   result.read(iprot_);
-  clock_gettime(CLOCK_REALTIME, &end);
-  std::cout << end.tv_nsec - start.tv_nsec << "\n";
+  
   iprot_->readMessageEnd();
   iprot_->getTransport()->readEnd();
 
@@ -831,8 +845,7 @@ void ServClient::structPacking(const heavy& h)
 void ServClient::send_structPacking(const heavy& h)
 {
   int32_t cseqid = 0;
-  struct timespec start, end;
-  clock_gettime(CLOCK_REALTIME, &start);
+  
   oprot_->writeMessageBegin("structPacking", ::apache::thrift::protocol::T_CALL, cseqid);
 
   Serv_structPacking_pargs args;
@@ -840,8 +853,7 @@ void ServClient::send_structPacking(const heavy& h)
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
-  clock_gettime(CLOCK_REALTIME, &end);
-  std::cout << end.tv_nsec - start.tv_nsec << "     ";
+  
   oprot_->getTransport()->writeEnd();
   oprot_->getTransport()->flush();
 }
@@ -851,9 +863,9 @@ void ServClient::recv_structPacking()
 
   int32_t rseqid = 0;
   std::string fname;
-  struct timespec start, end;
+  
   ::apache::thrift::protocol::TMessageType mtype;
-  clock_gettime(CLOCK_REALTIME, &start);
+  
   iprot_->readMessageBegin(fname, mtype, rseqid);
   if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
     ::apache::thrift::TApplicationException x;
@@ -874,8 +886,7 @@ void ServClient::recv_structPacking()
   }
   Serv_structPacking_presult result;
   result.read(iprot_);
-  clock_gettime(CLOCK_REALTIME, &end);
-  std::cout << end.tv_nsec - start.tv_nsec << "\n";
+  
   iprot_->readMessageEnd();
   iprot_->getTransport()->readEnd();
 
