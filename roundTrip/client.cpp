@@ -25,7 +25,7 @@ int main(int argc, char **argv) {
  
   ::std::shared_ptr<TTransport> transport(new TBufferedTransport(socket));
   ::std::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
-  std::string message = "Hello Server! sent from client";
+  std::string message = "";
   struct timespec start, end;
   ServClient client(protocol);
   transport->open();
