@@ -15,7 +15,7 @@ using namespace ::apache::thrift::transport;
 int main(int argc, char **argv) {
   
   int port = 9090;
-  std::string ip = "localhost"
+  std::string ip = "localhost";
   // 10.10.1.1
   if (argc > 1) {
     ip = argc[1];
