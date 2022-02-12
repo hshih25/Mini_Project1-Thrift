@@ -21,7 +21,7 @@ int main(int argc, char **argv) {
     ip = argv[1];
   }
   
-  ::std::shared_ptr<TSocket> socket(new TSocket("localhost", port));
+  ::std::shared_ptr<TSocket> socket(new TSocket(ip, port));
  
   ::std::shared_ptr<TTransport> transport(new TBufferedTransport(socket));
   ::std::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
