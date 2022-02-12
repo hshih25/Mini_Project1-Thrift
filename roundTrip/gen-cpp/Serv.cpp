@@ -167,11 +167,11 @@ uint32_t Serv_send_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 void ServClient::send(const std::string& str1)
 {
   struct timespec start, mid, end;
-  clock_gettime(CLOCK_REALTIME, &start);
+  clock_gettime(CLOCK_MONOTONIC, &start);
   send_send(str1);
-  clock_gettime(CLOCK_REALTIME, &mid);
+  clock_gettime(CLOCK_MONOTONIC, &mid);
   recv_send();
-  clock_gettime(CLOCK_REALTIME, &end);
+  clock_gettime(CLOCK_MONOTONIC, &end);
   std::cout << end.tv_nsec - start.tv_nsec << "    " << mid.tv_nsec - start.tv_nsec << "    " <<  end.tv_nsec - mid.tv_nsec << "\n";
 }
 

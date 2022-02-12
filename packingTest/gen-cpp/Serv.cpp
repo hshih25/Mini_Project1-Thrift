@@ -77,13 +77,13 @@ uint32_t Serv_intPacking_pargs::write(::apache::thrift::protocol::TProtocol* opr
   uint32_t xfer = 0;
   struct timespec start, end;
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
-  clock_gettime(CLOCK_REALTIME, &start);
+  clock_gettime(CLOCK_MONOTONIC, &start);
   xfer += oprot->writeStructBegin("Serv_intPacking_pargs");
 
   xfer += oprot->writeFieldBegin("num1", ::apache::thrift::protocol::T_I32, 1);
   xfer += oprot->writeI32((*(this->num1)));
   xfer += oprot->writeFieldEnd();
-  clock_gettime(CLOCK_REALTIME, &end);
+  clock_gettime(CLOCK_MONOTONIC, &end);
   std::cout << end.tv_nsec - start.tv_nsec << "     ";
 
   xfer += oprot->writeFieldStop();
@@ -170,7 +170,7 @@ uint32_t Serv_intPacking_presult::read(::apache::thrift::protocol::TProtocol* ip
   xfer += iprot->readStructBegin(fname);
 
   using ::apache::thrift::protocol::TProtocolException;
-  clock_gettime(CLOCK_REALTIME, &start);
+  clock_gettime(CLOCK_MONOTONIC, &start);
 
   while (true)
   {
@@ -194,7 +194,7 @@ uint32_t Serv_intPacking_presult::read(::apache::thrift::protocol::TProtocol* ip
     }
     xfer += iprot->readFieldEnd();
   }
-  clock_gettime(CLOCK_REALTIME, &end);
+  clock_gettime(CLOCK_MONOTONIC, &end);
   std::cout << end.tv_nsec - start.tv_nsec << "\n";
   xfer += iprot->readStructEnd();
 
@@ -270,14 +270,14 @@ uint32_t Serv_doublePacking_pargs::write(::apache::thrift::protocol::TProtocol* 
   uint32_t xfer = 0;
   struct timespec start, end;
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
-  clock_gettime(CLOCK_REALTIME, &start);
+  clock_gettime(CLOCK_MONOTONIC, &start);
   xfer += oprot->writeStructBegin("Serv_doublePacking_pargs");
 
   xfer += oprot->writeFieldBegin("num2", ::apache::thrift::protocol::T_DOUBLE, 1);
   xfer += oprot->writeDouble((*(this->num2)));
   xfer += oprot->writeFieldEnd();
   
-  clock_gettime(CLOCK_REALTIME, &end);
+  clock_gettime(CLOCK_MONOTONIC, &end);
   std::cout << end.tv_nsec - start.tv_nsec << "     ";
 
 
@@ -366,7 +366,7 @@ uint32_t Serv_doublePacking_presult::read(::apache::thrift::protocol::TProtocol*
 
   using ::apache::thrift::protocol::TProtocolException;
 
-  clock_gettime(CLOCK_REALTIME, &start);
+  clock_gettime(CLOCK_MONOTONIC, &start);
     
   while (true)
   {
@@ -390,7 +390,7 @@ uint32_t Serv_doublePacking_presult::read(::apache::thrift::protocol::TProtocol*
     }
     xfer += iprot->readFieldEnd();
   }
-  clock_gettime(CLOCK_REALTIME, &end);
+  clock_gettime(CLOCK_MONOTONIC, &end);
   std::cout << end.tv_nsec - start.tv_nsec << "\n";
   xfer += iprot->readStructEnd();
 
@@ -466,7 +466,7 @@ uint32_t Serv_stringPacking_pargs::write(::apache::thrift::protocol::TProtocol* 
   uint32_t xfer = 0;
   struct timespec start, end;
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
-  clock_gettime(CLOCK_REALTIME, &start);
+  clock_gettime(CLOCK_MONOTONIC, &start);
 
   xfer += oprot->writeStructBegin("Serv_stringPacking_pargs");
 
@@ -474,7 +474,7 @@ uint32_t Serv_stringPacking_pargs::write(::apache::thrift::protocol::TProtocol* 
   xfer += oprot->writeString((*(this->str1)));
   xfer += oprot->writeFieldEnd();
 
-  clock_gettime(CLOCK_REALTIME, &end);
+  clock_gettime(CLOCK_MONOTONIC, &end);
   std::cout << end.tv_nsec - start.tv_nsec << "     ";
 
   xfer += oprot->writeFieldStop();
@@ -562,7 +562,7 @@ uint32_t Serv_stringPacking_presult::read(::apache::thrift::protocol::TProtocol*
 
   using ::apache::thrift::protocol::TProtocolException;
 
-  clock_gettime(CLOCK_REALTIME, &start);
+  clock_gettime(CLOCK_MONOTONIC, &start);
 
   while (true)
   {
@@ -586,7 +586,7 @@ uint32_t Serv_stringPacking_presult::read(::apache::thrift::protocol::TProtocol*
     }
     xfer += iprot->readFieldEnd();
   }
-  clock_gettime(CLOCK_REALTIME, &end);
+  clock_gettime(CLOCK_MONOTONIC, &end);
   std::cout << end.tv_nsec - start.tv_nsec << "\n";
   xfer += iprot->readStructEnd();
 
@@ -663,7 +663,7 @@ uint32_t Serv_structPacking_pargs::write(::apache::thrift::protocol::TProtocol* 
   struct timespec start, end;
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
 
-  clock_gettime(CLOCK_REALTIME, &start);
+  clock_gettime(CLOCK_MONOTONIC, &start);
 
   xfer += oprot->writeStructBegin("Serv_structPacking_pargs");
 
@@ -671,7 +671,7 @@ uint32_t Serv_structPacking_pargs::write(::apache::thrift::protocol::TProtocol* 
   xfer += (*(this->h)).write(oprot);
   xfer += oprot->writeFieldEnd();
 
-  clock_gettime(CLOCK_REALTIME, &end);
+  clock_gettime(CLOCK_MONOTONIC, &end);
   std::cout << end.tv_nsec - start.tv_nsec << "     ";
 
   xfer += oprot->writeFieldStop();
@@ -758,7 +758,7 @@ uint32_t Serv_structPacking_presult::read(::apache::thrift::protocol::TProtocol*
 
   using ::apache::thrift::protocol::TProtocolException;
 
-  clock_gettime(CLOCK_REALTIME, &start);
+  clock_gettime(CLOCK_MONOTONIC, &start);
 
   while (true)
   {
@@ -782,7 +782,7 @@ uint32_t Serv_structPacking_presult::read(::apache::thrift::protocol::TProtocol*
     }
     xfer += iprot->readFieldEnd();
   }
-  clock_gettime(CLOCK_REALTIME, &end);
+  clock_gettime(CLOCK_MONOTONIC, &end);
   std::cout << end.tv_nsec - start.tv_nsec << "\n";
   xfer += iprot->readStructEnd();
 
