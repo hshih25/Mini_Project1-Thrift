@@ -13,6 +13,7 @@ using namespace ::apache::thrift::transport;
 
 
 int main(int argc, char **argv) {
+  std::cout << argc << "\n";
   int port = 9090;
   //::std::shared_ptr<TSocket> socket(new TSocket("localhost", port));
   ::std::shared_ptr<TSocket> socket(new TSocket("10.10.1.1", port));
