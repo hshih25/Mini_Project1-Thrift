@@ -31,7 +31,7 @@ int main(int argc, char **argv) {
   transport->open();
   std::cout << "RoundTrip    Request    Response" << "\n";
   for (int i = 0; i < 20; ++i) {
-  vector<int64_t> curr;
+  std::vector<int64_t> curr;
  	client.send(curr, message);  
   	
   	
