@@ -1,3 +1,3 @@
 service Serv {
-	void send(1: string str1);
+	list<i64> send(1: string str1);
 }
