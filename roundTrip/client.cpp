@@ -23,12 +23,12 @@ int main(int argc, char **argv) {
   struct timespec start, end;
   ServClient client(protocol);
   transport->open();
-  
+  std::cout << "RoundTrip    Request    Response" << "\n";
   for (int i = 0; i < 20; ++i) {
-  	clock_gettime(CLOCK_REALTIME, &start);
+  	
  	client.send(message);  
-  	clock_gettime(CLOCK_REALTIME, &end);
-  	std::cout << end.tv_nsec - start.tv_nsec << "\n";
+  	
+  	
   }
 
   transport->close();
