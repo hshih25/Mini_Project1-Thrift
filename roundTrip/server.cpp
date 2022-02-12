@@ -21,7 +21,7 @@ class ServHandler : virtual public ServIf {
   void send(std::vector<int64_t> & _return, const std::string& str1) {
     // Your implementation goes here
     struct timespec current;
-    clock_gettime(CLOCK_MONOTONIC, &current);
+    clock_gettime(CLOCK_REALTIME, &current);
     _return.push_back(current.tv_sec);
     _return.push_back(current.tv_nsec);
     
