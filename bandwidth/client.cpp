@@ -19,7 +19,10 @@ int main(int argc, char **argv) {
  
   ::std::shared_ptr<TTransport> transport(new TBufferedTransport(socket));
   ::std::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
-  std::string message = "Hello Server! sent from client";
+  std::string message = "Hello Server! sent from clientHello Server! sent from clientHello Server! sent from clientHello ServHello Server! sent from c";
+  std::string base = message + message;
+  base += base;
+  base += base;
   struct timespec start;
   ServClient client(protocol);
   transport->open();
@@ -35,7 +38,7 @@ int main(int argc, char **argv) {
 	std::cout << size << "     ";
   	//std::cout << size * 1000000l << " " << time[1] - nsec + ( time[0] - sec ) * 1000000000L << " \n";
 	std::cout << size * 1000000l / (time[1] - nsec + (time[0] - sec) * 1000000000L) << "\n";
-	message += message;
+	message += base;
   }
 
   transport->close();
