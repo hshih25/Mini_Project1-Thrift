@@ -10,3 +10,7 @@ all: build
 build: 
 	${CXX} $(FLAGS) server ${THRIFT} ${SERV}.cpp ${TYPE}.h server.cpp ${THRIFT}
 	${CXX} ${FLAGS} client ${THRIFT} client.cpp ${SERV}.cpp ${TYPE}.h ${THRIFT}
+
+clean:
+	rm server
+	rm client
