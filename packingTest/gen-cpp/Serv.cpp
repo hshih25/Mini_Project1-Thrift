@@ -143,12 +143,13 @@ uint32_t Serv_intPacking_presult::read(::apache::thrift::protocol::TProtocol* ip
   std::string fname;
   ::apache::thrift::protocol::TType ftype;
   int16_t fid;
-
+  struct timespec start, end;
+  clock_gettime(CLOCK_REALTIME, &start);
   xfer += iprot->readStructBegin(fname);
 
   using ::apache::thrift::protocol::TProtocolException;
 
-
+  
   while (true)
   {
     xfer += iprot->readFieldBegin(fname, ftype, fid);
@@ -160,7 +161,8 @@ uint32_t Serv_intPacking_presult::read(::apache::thrift::protocol::TProtocol* ip
   }
 
   xfer += iprot->readStructEnd();
-
+  clock_gettime(CLOCK_REALTIME, &end);
+  std::cout << end.tv_nsec - start.tv_nsec << "\n";
   return xfer;
 }
 
