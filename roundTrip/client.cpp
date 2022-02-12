@@ -16,15 +16,10 @@ int main(int argc, char **argv) {
   
   int port = 9090;
   
-  if (argc == 1)
-    ::std::shared_ptr<TSocket> socket(new TSocket("localhost", port));
-  else if (argv[1] == "master") 
-    ::std::shared_ptr<TSocket> socket(new TSocket("10.10.1.1", port));
-  else {
-    ::std::cout << "No this comment\n";
-    exit(0); 
-  }
-    
+  
+  //::std::shared_ptr<TSocket> socket(new TSocket("localhost", port));
+  ::std::shared_ptr<TSocket> socket(new TSocket("10.10.1.1", port));
+ 
   ::std::shared_ptr<TTransport> transport(new TBufferedTransport(socket));
   ::std::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
   std::string message = "Hello Server! sent from client";
