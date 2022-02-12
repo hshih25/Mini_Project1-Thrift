@@ -20,7 +20,7 @@ int main(int argc, char **argv) {
   if (argc > 1) {
     ip = argv[1];
   }
-  
+  std::cout << ip << std::endl;
   ::std::shared_ptr<TSocket> socket(new TSocket(ip, port));
  
   ::std::shared_ptr<TTransport> transport(new TBufferedTransport(socket));
