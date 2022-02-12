@@ -48,11 +48,13 @@ int main(int argc, char **argv) {
   }
   std::cout << "String (size:" << str2.size() << ") packing time(nanosec)\n";
   for (int i = 0; i < 20; ++i) {
-	client.stringPacking(str2);
+  string _return;
+	client.stringPacking(_return, str2);
   }
   std::cout << "Stucture packing time(nanosec)\n";
   for (int i = 0; i < 20; ++i) {
-	client.structPacking(h);
+  heavy _return;
+	client.structPacking(_return, h);
   }
 
   transport->close();
