@@ -231,12 +231,12 @@ void ServClient::send(std::vector<int64_t> & _return, const std::string& str1)
 {
   send_send(str1);
   struct timespec start, end;
-  clock_gettime(CLOCK_REALTIME, &start);
+  clock_gettime(CLOCK_MONOTONIC, &start);
   recv_send(_return);
-  clock_gettime(CLOCK_REALTIME, &end);
+  clock_gettime(CLOCK_MONOTONIC, &end);
   //std:: cout << _return[0] << " " << start.tv_sec << " " << _return[1] << " " << start.tv_nsec << "\n";
   std:: cout << (_return[0] - start.tv_sec) * 1000000000L + _return[1] - start.tv_nsec << "     ";
-  std:: cout << (end.tv_sec - _return[0]) * 1000000000L + end.tv_nsec - _return[1] << "\n";
+  std:: cout << (end.tv_sec - _return[0]) *   1000000000L + end.tv_nsec - _return[1] << "\n";
 }
 
 void ServClient::send_send(const std::string& str1)
