@@ -166,7 +166,7 @@ uint32_t Serv_intPacking_presult::read(::apache::thrift::protocol::TProtocol* ip
 
   xfer += iprot->readStructEnd();
   clock_gettime(CLOCK_REALTIME, &end);
-  std::cout << "unmarshaling:" << end.tv_nsec - start.tv_nsec << "\n";
+  std::cout << end.tv_nsec - start.tv_nsec << "\n";
   return xfer;
 }
 
@@ -330,7 +330,7 @@ uint32_t Serv_doublePacking_presult::read(::apache::thrift::protocol::TProtocol*
 
   xfer += iprot->readStructEnd();
   clock_gettime(CLOCK_REALTIME, &end);
-  std::cout << "unmarshaling:" << end.tv_nsec - start.tv_nsec << "\n";
+  std::cout << end.tv_nsec - start.tv_nsec << "\n";
   return xfer;
 }
 
@@ -491,7 +491,7 @@ uint32_t Serv_stringPacking_presult::read(::apache::thrift::protocol::TProtocol*
 
   xfer += iprot->readStructEnd();
   clock_gettime(CLOCK_REALTIME, &end);
-  std::cout << "unmarshaling:" << end.tv_nsec - start.tv_nsec << "\n";
+  std::cout << end.tv_nsec - start.tv_nsec << "\n";
   return xfer;
 }
 
@@ -539,7 +539,7 @@ uint32_t Serv_structPacking_args::read(::apache::thrift::protocol::TProtocol* ip
 
   xfer += iprot->readStructEnd();
   clock_gettime(CLOCK_REALTIME, &end);
-  std::cout << "unmarshaling:" << end.tv_nsec - start.tv_nsec << "\n";
+  std::cout << end.tv_nsec - start.tv_nsec << "\n";
   return xfer;
 }
 
@@ -656,7 +656,7 @@ uint32_t Serv_structPacking_presult::read(::apache::thrift::protocol::TProtocol*
 
   xfer += iprot->readStructEnd();
   clock_gettime(CLOCK_REALTIME, &end);
-  std::cout << "unmarshaling:" << end.tv_nsec - start.tv_nsec << "\n";
+  std::cout << end.tv_nsec - start.tv_nsec << "\n";
   return xfer;
 }
 
