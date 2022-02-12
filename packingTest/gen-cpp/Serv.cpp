@@ -636,6 +636,8 @@ uint32_t Serv_structPacking_presult::read(::apache::thrift::protocol::TProtocol*
   std::string fname;
   ::apache::thrift::protocol::TType ftype;
   int16_t fid;
+  struct timespec start, end;
+  clock_gettime(CLOCK_REALTIME, &start);  
 
   xfer += iprot->readStructBegin(fname);
 
@@ -653,7 +655,8 @@ uint32_t Serv_structPacking_presult::read(::apache::thrift::protocol::TProtocol*
   }
 
   xfer += iprot->readStructEnd();
-
+  clock_gettime(CLOCK_REALTIME, &end);
+  std::cout << end.tv_nsec - start.tv_nsec << "     ";
   return xfer;
 }
 
