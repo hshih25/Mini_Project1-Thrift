@@ -1,6 +1,6 @@
 # Bandwidth Measurements 
 
-This part is to mesure Marshaling and unmarshalling time that each type needed.
+This part is to mesure maximum bandwidth of Thrift. In this part, I use the exponential growth string to checking the bandwidth and the maximum transporting size of Thrift.
 
 ## Compilation
 
