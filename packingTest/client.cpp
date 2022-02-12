@@ -42,11 +42,11 @@ int main(int argc, char **argv) {
   for (int i = 0; i < 20; ++i) {
 	client.doublePacking(num1);
   } 
-  std::cout << "String (size:" << sizeof(str1) << ") packing time(nanosec)\n";
+  std::cout << "String (size:" << str1.size() << ") packing time(nanosec)\n";
   for (int i = 0; i < 20; ++i) {
 	client.stringPacking(str1);
   }
-  std::cout << "String (size:" << sizeof(str2) << ") packing time(nanosec)\n";
+  std::cout << "String (size:" << str2.size() << ") packing time(nanosec)\n";
   for (int i = 0; i < 20; ++i) {
 	client.stringPacking(str2);
   }
