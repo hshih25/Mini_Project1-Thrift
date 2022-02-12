@@ -24,6 +24,7 @@ class ServHandler : virtual public ServIf {
     clock_gettime(CLOCK_MONOTONIC, &current);
     _return.push_back(current.tv_sec);
     _return.push_back(current.tv_nsec);
+    
     printf("send\n");
   }
 
