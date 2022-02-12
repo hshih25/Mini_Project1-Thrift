@@ -18,7 +18,7 @@ class ServHandler : virtual public ServIf {
     // Your initialization goes here
   }
 
-  void send(const std::string& str1) {
+  void send(std::vector<int64_t> & _return, const std::string& str1) {
     // Your implementation goes here
     printf("send\n");
   }

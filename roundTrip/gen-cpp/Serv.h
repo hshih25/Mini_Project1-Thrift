@@ -11,8 +11,7 @@
 #include <thrift/async/TConcurrentClientSyncInfo.h>
 #include <memory>
 #include "roundTrip_types.h"
-#include <time.h>
-#include <iostream>
+
 
 
 #ifdef _MSC_VER
@@ -23,7 +22,7 @@
 class ServIf {
  public:
   virtual ~ServIf() {}
-  virtual void send(const std::string& str1) = 0;
+  virtual void send(std::vector<int64_t> & _return, const std::string& str1) = 0;
 };
 
 class ServIfFactory {
@@ -53,7 +52,7 @@ class ServIfSingletonFactory : virtual public ServIfFactory {
 class ServNull : virtual public ServIf {
  public:
   virtual ~ServNull() {}
-  void send(const std::string& /* str1 */) override {
+  void send(std::vector<int64_t> & /* _return */, const std::string& /* str1 */) override {
     return;
   }
 };
@@ -108,19 +107,30 @@ class Serv_send_pargs {
 
 };
 
+typedef struct _Serv_send_result__isset {
+  _Serv_send_result__isset() : success(false) {}
+  bool success :1;
+} _Serv_send_result__isset;
 
 class Serv_send_result {
  public:
 
-  Serv_send_result(const Serv_send_result&) noexcept;
-  Serv_send_result& operator=(const Serv_send_result&) noexcept;
+  Serv_send_result(const Serv_send_result&);
+  Serv_send_result& operator=(const Serv_send_result&);
   Serv_send_result() noexcept {
   }
 
   virtual ~Serv_send_result() noexcept;
+  std::vector<int64_t>  success;
 
-  bool operator == (const Serv_send_result & /* rhs */) const
+  _Serv_send_result__isset __isset;
+
+  void __set_success(const std::vector<int64_t> & val);
+
+  bool operator == (const Serv_send_result & rhs) const
   {
+    if (!(success == rhs.success))
+      return false;
     return true;
   }
   bool operator != (const Serv_send_result &rhs) const {
@@ -134,12 +144,19 @@ class Serv_send_result {
 
 };
 
+typedef struct _Serv_send_presult__isset {
+  _Serv_send_presult__isset() : success(false) {}
+  bool success :1;
+} _Serv_send_presult__isset;
 
 class Serv_send_presult {
  public:
 
 
   virtual ~Serv_send_presult() noexcept;
+  std::vector<int64_t> * success;
+
+  _Serv_send_presult__isset __isset;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
 
@@ -170,9 +187,9 @@ class ServClient : virtual public ServIf {
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> getOutputProtocol() {
     return poprot_;
   }
-  void send(const std::string& str1) override;
+  void send(std::vector<int64_t> & _return, const std::string& str1) override;
   void send_send(const std::string& str1);
-  void recv_send();
+  void recv_send(std::vector<int64_t> & _return);
  protected:
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot_;
@@ -221,13 +238,14 @@ class ServMultiface : virtual public ServIf {
     ifaces_.push_back(iface);
   }
  public:
-  void send(const std::string& str1) override {
+  void send(std::vector<int64_t> & _return, const std::string& str1) override {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->send(str1);
+      ifaces_[i]->send(_return, str1);
     }
-    ifaces_[i]->send(str1);
+    ifaces_[i]->send(_return, str1);
+    return;
   }
 
 };
@@ -262,9 +280,9 @@ class ServConcurrentClient : virtual public ServIf {
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> getOutputProtocol() {
     return poprot_;
   }
-  void send(const std::string& str1) override;
+  void send(std::vector<int64_t> & _return, const std::string& str1) override;
   int32_t send_send(const std::string& str1);
-  void recv_send(const int32_t seqid);
+  void recv_send(std::vector<int64_t> & _return, const int32_t seqid);
  protected:
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot_;

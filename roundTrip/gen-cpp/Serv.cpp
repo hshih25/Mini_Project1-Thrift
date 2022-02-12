@@ -111,7 +111,32 @@ uint32_t Serv_send_result::read(::apache::thrift::protocol::TProtocol* iprot) {
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    xfer += iprot->skip(ftype);
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_LIST) {
+          {
+            this->success.clear();
+            uint32_t _size0;
+            ::apache::thrift::protocol::TType _etype3;
+            xfer += iprot->readListBegin(_etype3, _size0);
+            this->success.resize(_size0);
+            uint32_t _i4;
+            for (_i4 = 0; _i4 < _size0; ++_i4)
+            {
+              xfer += iprot->readI64(this->success[_i4]);
+            }
+            xfer += iprot->readListEnd();
+          }
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
     xfer += iprot->readFieldEnd();
   }
 
@@ -126,6 +151,19 @@ uint32_t Serv_send_result::write(::apache::thrift::protocol::TProtocol* oprot) c
 
   xfer += oprot->writeStructBegin("Serv_send_result");
 
+  if (this->__isset.success) {
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_LIST, 0);
+    {
+      xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I64, static_cast<uint32_t>(this->success.size()));
+      std::vector<int64_t> ::const_iterator _iter5;
+      for (_iter5 = this->success.begin(); _iter5 != this->success.end(); ++_iter5)
+      {
+        xfer += oprot->writeI64((*_iter5));
+      }
+      xfer += oprot->writeListEnd();
+    }
+    xfer += oprot->writeFieldEnd();
+  }
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
@@ -155,7 +193,32 @@ uint32_t Serv_send_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    xfer += iprot->skip(ftype);
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_LIST) {
+          {
+            (*(this->success)).clear();
+            uint32_t _size6;
+            ::apache::thrift::protocol::TType _etype9;
+            xfer += iprot->readListBegin(_etype9, _size6);
+            (*(this->success)).resize(_size6);
+            uint32_t _i10;
+            for (_i10 = 0; _i10 < _size6; ++_i10)
+            {
+              xfer += iprot->readI64((*(this->success))[_i10]);
+            }
+            xfer += iprot->readListEnd();
+          }
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
     xfer += iprot->readFieldEnd();
   }
 
@@ -164,15 +227,10 @@ uint32_t Serv_send_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
   return xfer;
 }
 
-void ServClient::send(const std::string& str1)
+void ServClient::send(std::vector<int64_t> & _return, const std::string& str1)
 {
-  struct timespec start, mid, end;
-  clock_gettime(CLOCK_MONOTONIC, &start);
   send_send(str1);
-  clock_gettime(CLOCK_MONOTONIC, &mid);
-  recv_send();
-  clock_gettime(CLOCK_MONOTONIC, &end);
-  std::cout << end.tv_nsec - start.tv_nsec << "    " << mid.tv_nsec - start.tv_nsec << "    " <<  end.tv_nsec - mid.tv_nsec << "\n";
+  recv_send(_return);
 }
 
 void ServClient::send_send(const std::string& str1)
@@ -189,7 +247,7 @@ void ServClient::send_send(const std::string& str1)
   oprot_->getTransport()->flush();
 }
 
-void ServClient::recv_send()
+void ServClient::recv_send(std::vector<int64_t> & _return)
 {
 
   int32_t rseqid = 0;
@@ -215,11 +273,16 @@ void ServClient::recv_send()
     iprot_->getTransport()->readEnd();
   }
   Serv_send_presult result;
+  result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
   iprot_->getTransport()->readEnd();
 
-  return;
+  if (result.__isset.success) {
+    // _return pointer has now been filled
+    return;
+  }
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "send failed: unknown result");
 }
 
 bool ServProcessor::dispatchCall(::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, const std::string& fname, int32_t seqid, void* callContext) {
@@ -264,7 +327,8 @@ void ServProcessor::process_send(int32_t seqid, ::apache::thrift::protocol::TPro
 
   Serv_send_result result;
   try {
-    iface_->send(args.str1);
+    iface_->send(result.success, args.str1);
+    result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != nullptr) {
       this->eventHandler_->handlerError(ctx, "Serv.send");
@@ -301,10 +365,10 @@ void ServProcessor::process_send(int32_t seqid, ::apache::thrift::protocol::TPro
   return processor;
 }
 
-void ServConcurrentClient::send(const std::string& str1)
+void ServConcurrentClient::send(std::vector<int64_t> & _return, const std::string& str1)
 {
   int32_t seqid = send_send(str1);
-  recv_send(seqid);
+  recv_send(_return, seqid);
 }
 
 int32_t ServConcurrentClient::send_send(const std::string& str1)
@@ -325,7 +389,7 @@ int32_t ServConcurrentClient::send_send(const std::string& str1)
   return cseqid;
 }
 
-void ServConcurrentClient::recv_send(const int32_t seqid)
+void ServConcurrentClient::recv_send(std::vector<int64_t> & _return, const int32_t seqid)
 {
 
   int32_t rseqid = 0;
@@ -364,12 +428,18 @@ void ServConcurrentClient::recv_send(const int32_t seqid)
         throw TProtocolException(TProtocolException::INVALID_DATA);
       }
       Serv_send_presult result;
+      result.success = &_return;
       result.read(iprot_);
       iprot_->readMessageEnd();
       iprot_->getTransport()->readEnd();
 
-      sentry.commit();
-      return;
+      if (result.__isset.success) {
+        // _return pointer has now been filled
+        sentry.commit();
+        return;
+      }
+      // in a bad state, don't commit
+      throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "send failed: unknown result");
     }
     // seqid != rseqid
     this->sync_->updatePending(fname, mtype, rseqid);
