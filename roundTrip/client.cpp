@@ -18,7 +18,7 @@ int main(int argc, char **argv) {
   std::string ip = "localhost";
   // 10.10.1.1
   if (argc > 1) {
-    ip = argc[1];
+    ip = argv[1];
   }
   
   ::std::shared_ptr<TSocket> socket(new TSocket("localhost", port));
