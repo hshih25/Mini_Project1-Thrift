@@ -656,7 +656,7 @@ uint32_t Serv_structPacking_presult::read(::apache::thrift::protocol::TProtocol*
 
   xfer += iprot->readStructEnd();
   clock_gettime(CLOCK_REALTIME, &end);
-  std::cout << end.tv_nsec - start.tv_nsec << "     ";
+  std::cout << end.tv_nsec - start.tv_nsec << "\n";
   return xfer;
 }
 
