@@ -22,7 +22,9 @@ int main(int argc, char **argv) {
   double num1 = 123.1231;
   std::string str1 = "abcde";
   std::string str2 = "Hello Server! sent from clientHello Server! sent from clientHello Server! sent from clientHello ServHello Server! sent from c";
-  str2 *= 10;
+  str2 += str2;
+  str2 += str2;
+  str2+= str2;
   struct heavy h;
   struct another ano;
   ano.num1 = 123123;
