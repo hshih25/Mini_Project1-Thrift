@@ -13,4 +13,4 @@ Open two terminal and go to this directory, one terminal execute `./client` and 
 
 ## Testing Type
 
-`int`, `double`, `string (5 bytes)`, `string (23 bytes)` , `struct`
+`int`, `double`, `string (5 bytes)`, `string (23 bytes)` , `struct (int, double, string, bool, struct)`
