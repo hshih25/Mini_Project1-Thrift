@@ -8,12 +8,12 @@ Software: Thirft-0.15.0
 
 ## Marshalling and Unmarshalling
 
-The code is in the packingTest directory. 
+The code is in the `packingTest` directory. 
 
 ## Round trip
 
-The code is in the roundTrip directory. 
+The code is in the `roundTrip` directory. 
 
 ## Total Bandwidth
 
-The code is in the bandwidth directory. 
+The code is in the `bandwidth` directory. 
