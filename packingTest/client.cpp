@@ -25,6 +25,7 @@ int main(int argc, char **argv) {
   str2 += str2;
   str2 += str2;
   str2+= str2;
+  str2+= str2;
   struct heavy h;
   struct another ano;
   ano.num1 = 123123;
